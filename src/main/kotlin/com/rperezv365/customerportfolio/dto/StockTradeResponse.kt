@@ -5,7 +5,7 @@ import com.rperezv365.customerportfolio.domain.TradeAction
 
 data class StockTradeResponse(
 
-    val customerId: String,
+    val customerId: String?,
     val ticker: Ticker,
     val price: Int,
     val quantity: Int,

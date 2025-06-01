@@ -10,4 +10,8 @@ data class StockTradeRequest(
     val quantity: Int,
     val action: TradeAction
 
-)
+) {
+
+    fun totalPrice(): Int = price * quantity
+
+}
