@@ -11,6 +11,6 @@ data class PortfolioItem(
     @Id var id: String? = null,
     var customerId: ObjectId,
     var ticker: Ticker,
-    var quantity: String
+    var quantity: Int
 
 )
