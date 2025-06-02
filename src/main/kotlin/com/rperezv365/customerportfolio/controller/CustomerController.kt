@@ -15,12 +15,12 @@ class CustomerController(
     private val tradeService: TradeService
 ) {
 
-    @GetMapping("/{customer}")
+    @GetMapping("/{customerId}")
     fun getCustomerInformation(@PathVariable customerId: String): Mono<CustomerInformation> {
         return customerService.getCustomerInformation(customerId)
     }
 
-    @PostMapping("/{cusotmerId}/trade")
+    @PostMapping("/{customerId}/trade")
     fun trade(@PathVariable customerId: String, @RequestBody mono: Mono<StockTradeRequest>) : Mono<StockTradeResponse> {
         return mono.flatMap { request -> tradeService.trade(customerId, request) }
     }
