@@ -9,6 +9,7 @@ import com.rperezv365.customerportfolio.exception.ApplicationExceptions
 import com.rperezv365.customerportfolio.mapper.EntityDtoMapper
 import com.rperezv365.customerportfolio.repository.CustomerRespository
 import com.rperezv365.customerportfolio.repository.PortfolioItemRepository
+import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Mono
@@ -33,7 +34,7 @@ class TradeService(
             .filter { customer -> customer.balance >= request.totalPrice() }
             .switchIfEmpty(ApplicationExceptions.insufficientBalance(customerId))
 
-        val portfolioItemMono = portfolioItemRepository.findByCustomerIdAndTicker(customerId, request.ticker)
+        val portfolioItemMono = portfolioItemRepository.findByCustomerIdAndTicker(ObjectId(customerId), request.ticker)
             .defaultIfEmpty(EntityDtoMapper.toPortfolioItem(customerId, request.ticker))
 
         return customerMono.zipWhen{ customer -> portfolioItemMono }
@@ -44,7 +45,7 @@ class TradeService(
         val customerMono = customerRepository.findById(customerId)
             .switchIfEmpty(ApplicationExceptions.customerNotFound(customerId))
 
-        val portfolioItemMono = portfolioItemRepository.findByCustomerIdAndTicker(customerId, request.ticker)
+        val portfolioItemMono = portfolioItemRepository.findByCustomerIdAndTicker(ObjectId(customerId), request.ticker)
             .filter { item -> item.quantity >= request.quantity }
             .switchIfEmpty(ApplicationExceptions.insufficientShares(customerId))
 

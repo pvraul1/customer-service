@@ -13,6 +13,6 @@ interface PortfolioItemRepository : ReactiveMongoRepository<PortfolioItem, Strin
 
     fun findAllByCustomerId(customerId: ObjectId): Flux<PortfolioItem>
 
-    fun findByCustomerIdAndTicker(customerId: String, ticker: Ticker): Mono<PortfolioItem>
+    fun findByCustomerIdAndTicker(customerId: ObjectId, ticker: Ticker): Mono<PortfolioItem>
 
 }

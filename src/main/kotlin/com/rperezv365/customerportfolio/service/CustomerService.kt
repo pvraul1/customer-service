@@ -21,6 +21,7 @@ class CustomerService(
         return customerRespository.findById(customerId)
             .switchIfEmpty(ApplicationExceptions.customerNotFound(customerId))
             .flatMap(this::buildCustomerInformation)
+            .log()
 
     }
 
